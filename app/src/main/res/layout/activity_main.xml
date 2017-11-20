@@ -8,6 +8,16 @@
     tools:context=".MainActivity" >
 
     <!-- Top buttons layout -->
+    <TextView
+        android:id="@+id/timer_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:text="00 secondes" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"

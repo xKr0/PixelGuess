@@ -1,18 +1,22 @@
 package com.example.asus_pc.drawmyapp;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import java.util.Timer;
+import java.io.ByteArrayOutputStream;
 import java.util.UUID;
 import android.provider.MediaStore;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
@@ -25,52 +29,83 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // brush sizes
     private float smallBrush, mediumBrush, largeBrush;
 
-    // Timer
-    Timer timer;
-
     // end time
-    int timeMax = 5000;
+    int timeMax = 7000;
+
+    // display of the timer
+    private TextView timerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        drawView = (DrawingView)findViewById(R.id.drawing);
+        drawView = findViewById(R.id.drawing);
 
         // retrieve the first paint color button in the palette area
-        LinearLayout paintLayout = (LinearLayout)findViewById(R.id.paint_colors);
+        LinearLayout paintLayout = findViewById(R.id.paint_colors);
         currPaint = (ImageButton)paintLayout.getChildAt(0);
 
         // to show the selected color paint
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
         //currPaint.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.paint_pressed));
 
+        timerText = findViewById(R.id.timer_text);
+
         // instanciate brushes
         smallBrush = getResources().getInteger(R.integer.small_size);
         mediumBrush = getResources().getInteger(R.integer.medium_size);
         largeBrush = getResources().getInteger(R.integer.large_size);
 
-        drawBtn = (ImageButton)findViewById(R.id.draw_btn);
+        drawBtn = findViewById(R.id.draw_btn);
         drawBtn.setOnClickListener(this);
 
         // set brush size
         drawView.setBrushSize(mediumBrush);
 
-        eraseBtn = (ImageButton)findViewById(R.id.erase_btn);
+        eraseBtn = findViewById(R.id.erase_btn);
         eraseBtn.setOnClickListener(this);
 
-        newBtn = (ImageButton)findViewById(R.id.new_btn);
+        newBtn = findViewById(R.id.new_btn);
         newBtn.setOnClickListener(this);
 
-        saveBtn = (ImageButton)findViewById(R.id.save_btn);
+        saveBtn = findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(this);
 
-        /*
-        timer = new Timer();
-        TimeOut timeOut = new TimeOut(this);
-        timer.schedule(timeOut, 0, timeMax);
-        */
+        new CountDownTimer(timeMax, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                timerText.setText(millisUntilFinished / 1000 + " secondes restantes");
+                //here you can have your logic to set text to edittext
+            }
+
+            public void onFinish() {
+                timerText.setText("done!");
+
+                // create a alert
+                // verifying the user mean to restart
+                AlertDialog.Builder newDialog = new AlertDialog.Builder(MainActivity.this);
+                newDialog.setTitle("Time Out");
+                newDialog.setMessage("Ready to show your art?");
+                newDialog.setPositiveButton("Ready", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which){
+                        dialog.dismiss();
+
+                        // go to the next page
+                        Intent intent =  new Intent(MainActivity.this,
+                                GuessActivity.class);
+
+                        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                        Bitmap b = drawView.getCanvasBitmap();
+                        b.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                        intent.putExtra("byteArray", bs.toByteArray());
+                        startActivity(intent);
+                    }
+                });
+                newDialog.show();
+            }
+
+        }.start();
     }
 
     @Override
@@ -84,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             brushDialog.setContentView(R.layout.brush_chooser);
 
             // listen for clicks on the three size buttons
-            ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
+            ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
             smallBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -95,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
-            ImageButton mediumBtn = (ImageButton)brushDialog.findViewById(R.id.medium_brush);
+            ImageButton mediumBtn = brushDialog.findViewById(R.id.medium_brush);
             mediumBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -106,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
-            ImageButton largeBtn = (ImageButton)brushDialog.findViewById(R.id.large_brush);
+            ImageButton largeBtn = brushDialog.findViewById(R.id.large_brush);
             largeBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -127,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             brushDialog.setContentView(R.layout.brush_chooser);
 
             // to choose the size of the erase brush
-            ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
+            ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
             smallBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -136,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     brushDialog.dismiss();
                 }
             });
-            ImageButton mediumBtn = (ImageButton)brushDialog.findViewById(R.id.medium_brush);
+            ImageButton mediumBtn = brushDialog.findViewById(R.id.medium_brush);
             mediumBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -145,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     brushDialog.dismiss();
                 }
             });
-            ImageButton largeBtn = (ImageButton)brushDialog.findViewById(R.id.large_brush);
+            ImageButton largeBtn = brushDialog.findViewById(R.id.large_brush);
             largeBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -182,27 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             saveDialog.setMessage("Save drawing to device Gallery?");
             saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which){
-                    // enabling the drawing cache on the custom View
-                    drawView.setDrawingCacheEnabled(true);
-                    // attempt to write the image to a file
-                    String imgSaved = MediaStore.Images.Media.insertImage(
-                            getContentResolver(), drawView.getDrawingCache(),
-                            UUID.randomUUID().toString()+".png", "drawing");
-
-                    // feedback on success or fail save
-                    if(imgSaved!=null){
-                        Toast savedToast = Toast.makeText(getApplicationContext(),
-                                "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
-                        savedToast.show();
-                    }
-                    else{
-                        Toast unsavedToast = Toast.makeText(getApplicationContext(),
-                                "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
-                        unsavedToast.show();
-                    }
-
-                    // destroy cache
-                    drawView.destroyDrawingCache();
+                saveImage();
                 }
             });
             saveDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
@@ -212,6 +227,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             saveDialog.show();
         }
+    }
+
+    private String saveImage() {
+        // enabling the drawing cache on the custom View
+        drawView.setDrawingCacheEnabled(true);
+
+        String name = UUID.randomUUID().toString()+".png";
+
+        // attempt to write the image to a file
+        String imgSaved = MediaStore.Images.Media.insertImage(
+                getContentResolver(), drawView.getDrawingCache(),
+                name, "drawing");
+
+        // feedback on success or fail save
+        if(imgSaved!=null){
+            Toast savedToast = Toast.makeText(getApplicationContext(),
+                    "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
+            savedToast.show();
+        }
+        else{
+            Toast unsavedToast = Toast.makeText(getApplicationContext(),
+                    "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
+            unsavedToast.show();
+        }
+
+        // destroy cache
+        drawView.destroyDrawingCache();
+
+        return name;
     }
 
     public void paintClicked(View view){

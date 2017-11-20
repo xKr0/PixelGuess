@@ -12,4 +12,6 @@
     <string name="load_title">Welcome to PixelGuess</string>
     <string name="play_btn">Play</string>
     <string name="load_image">Never stop drawing</string>
+    <string name="Timer">00 secondes</string>
+
 </resources>

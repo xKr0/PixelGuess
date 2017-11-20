@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import java.util.Timer;
 import java.util.UUID;
 import android.provider.MediaStore;
 import android.app.AlertDialog;
@@ -22,6 +24,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // brush sizes
     private float smallBrush, mediumBrush, largeBrush;
+
+    // Timer
+    Timer timer;
+
+    // end time
+    int timeMax = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         saveBtn = (ImageButton)findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(this);
+
+        timer = new Timer();
+        TimeOut timeOut = new TimeOut(this);
+        timer.schedule(timeOut, 0, timeMax);
     }
 
     @Override

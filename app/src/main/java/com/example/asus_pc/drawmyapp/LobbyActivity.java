@@ -35,21 +35,16 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> eventIterable = dataSnapshot.getChildren();
-
+                User newValue = null;
                 for(DataSnapshot eventSnap : eventIterable) {
 
                     Map eventMap = (Map) eventSnap.getValue();
 
                     User usr = eventSnap.getValue(User.class);
-                    /*
-                    User usr = new User((String)eventMap.get("pseudo"),
-                            (String)eventMap.get("state"),
-                            (int)eventMap.get("score"));
-                            */
-
+                    if (usr.getPseudo().equals(Score.getInstance().currUser.getPseudo()))
+                        newValue = usr;
 
                     usrList.add(usr);
-
 
                 }
                 // CASE : YOUR NEXT
@@ -57,24 +52,22 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                 //      - update the session
                 //      - update itself to drawing
                 //      - updates all users to watching
-                if (usrList.size() >= 2 && usrList.get(nextToDraw).getPseudo().equals(Score.getInstance().currUser.getPseudo())){
+                if (usrList.size() >= 2 && usrList.get(nextToDraw).getPseudo().equals(Score.getInstance().currUser.getPseudo())
+                        && Score.getInstance().currUser.getState().equals("ready")){
                     for (User u : usrList) {
-                        u.setState("watching");
-                        ref.child("users").child(u.getPseudo()).setValue(u);
+                        if (!u.getPseudo().equals(Score.getInstance().currUser.getPseudo())) {
+                            u.setState("watching");
+                            ref.child("users").child(u.getPseudo()).setValue(u);
+                        }
                     }
                     Score.getInstance().currUser.setState("drawing");
                     ref.child("users").child(Score.getInstance().currUser.getPseudo()).setValue(Score.getInstance().currUser);
                     changeActivity();
                 } else {
-                    Log.d("user:::", Score.getInstance().currUser.getPseudo());
-                    for (User usr:usrList
-                         ) {
-                        if (usr.getPseudo().equals(Score.getInstance().currUser.getPseudo())){
-                            if (usr.getState().equals(Score.getInstance().currUser.getState())){
-                                Score.getInstance().currUser.setState(usr.getState());
-                                changeActivity();
-                            }
-                        }
+                    //Log.d("user:::", Score.getInstance().currUser.getPseudo());
+                    if (newValue.getState().equals(Score.getInstance().currUser.getState())){
+                        Score.getInstance().currUser.setState(newValue.getState());
+                        changeActivity();
                     }
                 }
             }

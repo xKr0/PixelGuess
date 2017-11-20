@@ -51,7 +51,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                 //      - update the session
                 //      - update itself to drawing
                 //      - updates all users to watching
-                if (usrList.size() >= 2 && nextToDraw.equals(Score.getInstance().currUser.getPseudo())
+                if (usrList.size() >= 2 && next.equals(Score.getInstance().currUser.getPseudo())
                         && Score.getInstance().currUser.getState().equals("ready")){
                     for (User u : usrList) {
                         if (!u.getPseudo().equals(Score.getInstance().currUser.getPseudo())) {
@@ -102,7 +102,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Session session = dataSnapshot.getValue(Session.class);
-                nextToDraw = session.getNextToDraw();
+                next = session.getNextToDraw();
                 Log.d("sess", session.getBitmap() + " " + session.getState() + " " + session.getNextToDraw());
             }
 

@@ -1,4 +1,10 @@
 <resources>
+    <!-- image dim -->
+    <dimen name="img_height">240dp</dimen>
+    <dimen name="img_width">192dp</dimen>
+
+    <dimen name="margin_large">20dp</dimen>
+
     <!-- Brush sizes -->
     <dimen name="small_brush">10dp</dimen>
     <integer name="small_size">10</integer>

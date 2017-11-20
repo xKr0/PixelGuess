@@ -66,9 +66,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         saveBtn = (ImageButton)findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(this);
 
+        /*
         timer = new Timer();
         TimeOut timeOut = new TimeOut(this);
         timer.schedule(timeOut, 0, timeMax);
+        */
     }
 
     @Override

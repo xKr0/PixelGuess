@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DrawMyApp</string>
+    <string name="app_name">PixelGuess</string>
     <string name="start_new">New</string>
     <string name="brush">Brush</string>
     <string name="erase">Erase</string>
@@ -8,4 +8,8 @@
     <string name="sml">Small</string>
     <string name="med">Medium</string>
     <string name="lrg">Large</string>
+    <string name="play_desc">play</string>
+    <string name="load_title">Welcome to PixelGuess</string>
+    <string name="play_btn">Play</string>
+    <string name="load_image">Never stop drawing</string>
 </resources>

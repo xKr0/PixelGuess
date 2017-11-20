@@ -44,15 +44,14 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                     if (usr.getPseudo().equals(Score.getInstance().currUser.getPseudo()))
                         newValue = usr;
 
-                    usrList.add(0, usr);
-
+                    usrList.add(usr);
                 }
                 // CASE : YOUR NEXT
                 // user has to :
                 //      - update the session
                 //      - update itself to drawing
                 //      - updates all users to watching
-                if (usrList.size() >= 2 && usrList.get(nextToDraw).getPseudo().equals(Score.getInstance().currUser.getPseudo())
+                if (usrList.size() >= 2 && nextToDraw.equals(Score.getInstance().currUser.getPseudo())
                         && Score.getInstance().currUser.getState().equals("ready")){
                     for (User u : usrList) {
                         if (!u.getPseudo().equals(Score.getInstance().currUser.getPseudo())) {

@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class DeleteOnDestroyActivity extends AppCompatActivity
 {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-    public int nextToDraw;
+    public String nextToDraw;
 
     @Override
     public void onDestroy() {
@@ -25,6 +25,9 @@ public class DeleteOnDestroyActivity extends AppCompatActivity
 
         // we also had the user into the database Firebase
         ref.child("users").child(Score.getInstance().currUser.getPseudo()).setValue(Score.getInstance().currUser);
+
+        // we change the user to play
+        ref.child("session").child("next").setValue(pseudo);
     }
 
 }

@@ -1,12 +1,12 @@
 package com.example.asus_pc.drawmyapp.model;
 
 public class Session {
-    private int nextToDraw;
+    private String nextToDraw;
     private String state, bitmap;
 
     public Session(String bitmap, String next, String state){
         this.bitmap = bitmap;
-        this.nextToDraw = Integer.parseInt(next);
+        this.nextToDraw = next;
         this.state = state;
     }
 
@@ -15,11 +15,11 @@ public class Session {
         // empty
     }
 
-    public int getNextToDraw() {
+    public String getNextToDraw() {
         return nextToDraw;
     }
 
-    public void setNextToDraw(int nextToDraw) {
+    public void setNextToDraw(String nextToDraw) {
         this.nextToDraw = nextToDraw;
     }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="wordsArray">
+        <item>dog</item>
+        <item>cow</item>
+        <item>cat</item>
+        <item>butterfly</item>
+        <item>dragon</item>
+        <item>bear</item>
+    </string-array>
+
+</resources>

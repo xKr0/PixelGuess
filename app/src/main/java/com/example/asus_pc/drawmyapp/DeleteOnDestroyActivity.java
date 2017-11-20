@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class DeleteOnDestroyActivity extends AppCompatActivity
 {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-    public String nextToDraw;
+    public String nextToDraw = "";
 
     @Override
     public void onDestroy() {

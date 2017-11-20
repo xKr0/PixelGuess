@@ -20,5 +20,7 @@
 
     <string name="PlayerResult">Player Result</string>
     <string name="PlayAgain">Next Player!</string>
-    <string name="desc_text">start drawing</string>
+    <string name="desc_text">
+        Pixel Draw is a funny little game where your drawing skills will be judged... by you friend!
+        Time to let your inner artist go wild! But mind the clock, 7 seconds is all you get...</string>
 </resources>

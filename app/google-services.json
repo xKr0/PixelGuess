@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "279572116462",
+    "firebase_url": "https://pixeldraw-85b8d.firebaseio.com",
+    "project_id": "pixeldraw-85b8d",
+    "storage_bucket": "pixeldraw-85b8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279572116462:android:fbc247845879d327",
+        "android_client_info": {
+          "package_name": "com.example.asus_pc.drawmyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279572116462-vn6opo7cghgtdrh186of2qp1ft3mg31e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.asus_pc.drawmyapp",
+            "certificate_hash": "61bd97b010b88719d847837b6b2bd7d7ee624761"
+          }
+        },
+        {
+          "client_id": "279572116462-tuun7igo2hj80k98a31vgjmcdbannuv8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJwplijT95VSPowNrUK72wQVQQxN_ob1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279572116462-tuun7igo2hj80k98a31vgjmcdbannuv8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Timer;
 import java.util.UUID;
 import android.provider.MediaStore;
 import android.app.AlertDialog;

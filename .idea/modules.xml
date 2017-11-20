@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PixelDraw.iml" filepath="$PROJECT_DIR$/PixelDraw.iml" />
       <module fileurl="file://D:\OneDrive\Documents\Cours UQAC\Semestre 1\ProgMobile\PixelGuess\PixelDraw.iml" filepath="D:\OneDrive\Documents\Cours UQAC\Semestre 1\ProgMobile\PixelGuess\PixelDraw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PixelGuess.iml" filepath="$PROJECT_DIR$/PixelGuess.iml" />
       <module fileurl="file://D:\Asus-Pc\AndroidProjects\PixelDraw\PixelGuess.iml" filepath="D:\Asus-Pc\AndroidProjects\PixelDraw\PixelGuess.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\OneDrive\Documents\Cours UQAC\Semestre 1\ProgMobile\PixelGuess\app\app.iml" filepath="D:\OneDrive\Documents\Cours UQAC\Semestre 1\ProgMobile\PixelGuess\app\app.iml" />
     </modules>
   </component>
 </project>

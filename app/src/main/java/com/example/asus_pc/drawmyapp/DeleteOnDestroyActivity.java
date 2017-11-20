@@ -9,21 +9,22 @@ import com.google.firebase.database.FirebaseDatabase;
 public class DeleteOnDestroyActivity extends AppCompatActivity
 {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-    public User currUser;
+    public int nextToDraw;
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if (currUser != null){
-            ref.child("users").child(currUser.getPseudo()).removeValue();
+        if (Score.getInstance().currUser != null){
+            ref.child("users").child(Score.getInstance().currUser.getPseudo()).removeValue();
         }
     }
 
     protected void addUserToDatabase(String pseudo){
-        currUser = new User(pseudo, "none");
+        Score.getInstance().currUser = new User(pseudo, "ready");
 
         // we also had the user into the database Firebase
-        ref.child("users").child(currUser.getPseudo()).setValue(currUser);
+        ref.child("users").child(Score.getInstance().currUser.getPseudo()).setValue(Score.getInstance().currUser);
     }
+
 }

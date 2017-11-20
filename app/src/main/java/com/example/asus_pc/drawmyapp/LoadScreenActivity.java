@@ -51,7 +51,7 @@ public class LoadScreenActivity extends DeleteOnDestroyActivity
                     addUserToDatabase(pseudo.getText().toString());
 
                     dialog.dismiss();
-                    startActivity(new Intent(LoadScreenActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoadScreenActivity.this, LobbyActivity.class));
                 }
                 else {
                     handleEmptyPseudo();

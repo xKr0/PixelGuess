@@ -14,9 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".LoadScreenActivity"
             android:screenOrientation="portrait">
@@ -27,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".GuessActivity" />
-        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".ResultActivity" />
+        <activity android:name=".LobbyActivity"></activity>
     </application>
 
 </manifest>

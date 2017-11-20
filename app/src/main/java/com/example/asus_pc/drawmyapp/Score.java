@@ -1,5 +1,7 @@
 package com.example.asus_pc.drawmyapp;
 
+import com.example.asus_pc.drawmyapp.model.User;
+
 public class Score {
     private Score()
     {}
@@ -14,6 +16,8 @@ public class Score {
     private int scorePlayer2 = 0;
 
     private int currPlayer = 1;
+
+    public User currUser;
 
     public int getScorePlayer1() {
         return scorePlayer1;

@@ -50,13 +50,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
 
                     usrList.add(usr);
 
-                    Log.d("user:::", Score.getInstance().currUser.getPseudo());
-                    if (usr.getPseudo().equals(Score.getInstance().currUser.getPseudo())){
-                        if (usr.getState().equals(Score.getInstance().currUser.getState())){
-                            Score.getInstance().currUser.setState(usr.getState());
-                            changeActivity();
-                        }
-                    }
+
                 }
                 // CASE : YOUR NEXT
                 // user has to :
@@ -70,6 +64,18 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                     }
                     Score.getInstance().currUser.setState("drawing");
                     ref.child("users").child(Score.getInstance().currUser.getPseudo()).setValue(Score.getInstance().currUser);
+                    changeActivity();
+                } else {
+                    Log.d("user:::", Score.getInstance().currUser.getPseudo());
+                    for (User usr:usrList
+                         ) {
+                        if (usr.getPseudo().equals(Score.getInstance().currUser.getPseudo())){
+                            if (usr.getState().equals(Score.getInstance().currUser.getState())){
+                                Score.getInstance().currUser.setState(usr.getState());
+                                changeActivity();
+                            }
+                        }
+                    }
                 }
             }
 

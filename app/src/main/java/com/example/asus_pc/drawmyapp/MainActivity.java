@@ -5,23 +5,20 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import java.io.ByteArrayOutputStream;
-import java.util.UUID;
-import android.provider.MediaStore;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener
+public class MainActivity extends DeleteOnDestroyActivity implements View.OnClickListener
 {
     // custom instance in view
     private DrawingView drawView;

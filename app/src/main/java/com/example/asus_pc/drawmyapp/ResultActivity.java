@@ -1,13 +1,12 @@
 package com.example.asus_pc.drawmyapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends DeleteOnDestroyActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

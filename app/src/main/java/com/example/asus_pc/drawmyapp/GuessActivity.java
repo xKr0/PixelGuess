@@ -3,8 +3,6 @@ package com.example.asus_pc.drawmyapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class GuessActivity extends AppCompatActivity {
+public class GuessActivity extends DeleteOnDestroyActivity {
 
     // input where to put the answer
     private EditText answerText;

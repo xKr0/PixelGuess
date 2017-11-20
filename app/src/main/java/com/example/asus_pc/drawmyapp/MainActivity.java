@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private float smallBrush, mediumBrush, largeBrush;
 
     // end time
-    int timeMax = 7000;
+    int timeMax = 10000;
 
     // display of the timer
     private TextView timerText;

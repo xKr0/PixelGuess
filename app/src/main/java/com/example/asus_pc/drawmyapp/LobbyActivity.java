@@ -44,7 +44,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                     if (usr.getPseudo().equals(Score.getInstance().currUser.getPseudo()))
                         newValue = usr;
 
-                    usrList.add(usr);
+                    usrList.add(0, usr);
 
                 }
                 // CASE : YOUR NEXT

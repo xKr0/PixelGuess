@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // display of the timer
     private TextView timerText;
 
+    private String wordToGuess;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         saveBtn = findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(this);
 
+        showInitDialog();
+    }
+
+    private void handleTimer(){
         new CountDownTimer(timeMax, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -99,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Bitmap b = drawView.getCanvasBitmap();
                         b.compress(Bitmap.CompressFormat.PNG, 50, bs);
                         intent.putExtra("byteArray", bs.toByteArray());
-                        intent.putExtra("answer", "Cat");
+                        intent.putExtra("answer", wordToGuess);
                         startActivity(intent);
                     }
                 });
@@ -107,6 +113,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         }.start();
+    }
+
+    private void showInitDialog(){
+        wordToGuess = GuessWordsList.pichAWord();
+        AlertDialog.Builder wordDialog = new AlertDialog.Builder(MainActivity.this);
+        wordDialog.setTitle("Your Word");
+        wordDialog.setMessage("Draw me a(n) " + wordToGuess + " please.");
+        wordDialog.setPositiveButton("Draw", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                dialog.dismiss();
+                handleTimer();
+            }
+        });
+        wordDialog.show();
     }
 
     @Override

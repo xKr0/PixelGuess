@@ -16,8 +16,8 @@ public class LoadScreenActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_screen);
 
+        // get the array of words
         GuessWordsList.setWordsList(getResources().getStringArray(R.array.wordsArray));
-        Log.d("word::",GuessWordsList.pichAWord());
 
         play = (Button)findViewById(R.id.play_btn);
         play.setOnClickListener(new View.OnClickListener() {

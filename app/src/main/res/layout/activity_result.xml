@@ -19,26 +19,41 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:padding="5dp"
+            android:padding="0dp"
+            android:paddingBottom="15dp"
             android:text="@string/PlayerResult"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/scoreText"
+            android:id="@+id/scorePlayer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/PlayerResult"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/scorePlayer2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/PlayerResult"
+            android:textColor="@android:color/holo_green_dark"
             android:textSize="24sp" />
 
         <Button
             android:id="@+id/playAgainButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:padding="5dp"
             android:text="@string/PlayAgain"
+            android:textColor="@android:color/background_light"
             android:textSize="24sp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

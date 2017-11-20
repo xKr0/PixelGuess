@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }.start();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void showInitDialog(){
         wordToGuess = GuessWordsList.pichAWord();
         AlertDialog.Builder wordDialog = new AlertDialog.Builder(MainActivity.this);
@@ -128,6 +129,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wordDialog.setPositiveButton("Draw", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
                 dialog.dismiss();
+            }
+        });
+        wordDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
                 handleTimer();
             }
         });

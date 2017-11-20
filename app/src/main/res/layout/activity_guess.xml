@@ -20,7 +20,7 @@
             android:ems="10"
             android:gravity="bottom|center"
             android:inputType="textPersonName"
-            android:text="@string/Answer" />
+            android:hint="@string/Answer" />
 
         <Button
             android:id="@+id/validateAnswer"

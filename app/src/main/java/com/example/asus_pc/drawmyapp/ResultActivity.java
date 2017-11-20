@@ -28,8 +28,11 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         // display the two player scores
-        TextView scoreText = findViewById(R.id.scoreText);
-        scoreText.setText("Player 1 : " + Score.getInstance().getScorePlayer1() + " Vs " + Score.getInstance().getScorePlayer2());
+        TextView scoreTextPlayer1 = findViewById(R.id.scorePlayer1);
+        scoreTextPlayer1.setText("Player 1 : " + Score.getInstance().getScorePlayer1());
+
+        TextView scoreTextPlayer2 = findViewById(R.id.scorePlayer2);
+        scoreTextPlayer2.setText("Player 2 :" + Score.getInstance().getScorePlayer2());
 
         // on the play again button launch a new round
         Button playAgain = findViewById(R.id.playAgainButton);

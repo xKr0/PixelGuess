@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="wordsArray">
+        <item>dog</item>
+        <item>cow</item>
+        <item>cat</item>
+        <item>butterfly</item>
+        <item>dragon</item>
+        <item>bear</item>
+        <item>beer</item>
+        <item>horse</item>
+        <item>computer</item>
+        <item>smartphone</item>
+        <item>house</item>
+        <item>glasses</item>
+        <item>game</item>
+        <item>screen</item>
+        <item>school</item>
+        <item>flag</item>
+        <item>mouse</item>
+        <item>bed</item>
+        <item>lamp</item>
+        <item>grandma</item>
+        <item>airplane</item>
+        <item>kingdom</item>
+        <item>zombie</item>
+        <item>knight</item>
+        <item>wizzard</item>
+    </string-array>
+
+</resources>

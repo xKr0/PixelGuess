@@ -20,4 +20,5 @@
 
     <string name="PlayerResult">Player Result</string>
     <string name="PlayAgain">Next Player!</string>
+    <string name="desc_text">start drawing</string>
 </resources>

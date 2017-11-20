@@ -2,7 +2,9 @@ package com.example.asus_pc.drawmyapp;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,8 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 {
     // custom instance in view
     private DrawingView drawView;
-    // paint color button in the palette, drawing button, erase button, new button, save button
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
+    // paint color button in the palette, drawing button, erase button, new button
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn;
 
     // brush sizes
     private float smallBrush, mediumBrush, largeBrush;
@@ -71,9 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newBtn = findViewById(R.id.new_btn);
         newBtn.setOnClickListener(this);
 
-        saveBtn = findViewById(R.id.save_btn);
-        saveBtn.setOnClickListener(this);
-
         showInitDialog();
     }
 
@@ -85,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //here you can have your logic to set text to edittext
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             public void onFinish() {
                 timerText.setText("done!");
 
@@ -96,7 +96,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 newDialog.setPositiveButton("Ready", new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which){
                         dialog.dismiss();
+                    }
+                });
 
+                newDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
                         // go to the next page
                         Intent intent =  new Intent(MainActivity.this,
                                 GuessActivity.class);
@@ -231,52 +236,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             newDialog.show();
         }
-        // save button clicked
-        else if(view.getId()==R.id.save_btn){
-            AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
-            saveDialog.setTitle("Save drawing");
-            saveDialog.setMessage("Save drawing to device Gallery?");
-            saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int which){
-                saveImage();
-                }
-            });
-            saveDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int which){
-                    dialog.cancel();
-                }
-            });
-            saveDialog.show();
-        }
-    }
-
-    private String saveImage() {
-        // enabling the drawing cache on the custom View
-        drawView.setDrawingCacheEnabled(true);
-
-        String name = UUID.randomUUID().toString()+".png";
-
-        // attempt to write the image to a file
-        String imgSaved = MediaStore.Images.Media.insertImage(
-                getContentResolver(), drawView.getDrawingCache(),
-                name, "drawing");
-
-        // feedback on success or fail save
-        if(imgSaved!=null){
-            Toast savedToast = Toast.makeText(getApplicationContext(),
-                    "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
-            savedToast.show();
-        }
-        else{
-            Toast unsavedToast = Toast.makeText(getApplicationContext(),
-                    "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
-            unsavedToast.show();
-        }
-
-        // destroy cache
-        drawView.destroyDrawingCache();
-
-        return name;
     }
 
     public void paintClicked(View view){

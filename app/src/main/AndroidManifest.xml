@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GuessActivity"></activity>
+        <activity android:name=".GuessActivity" />
+        <activity android:name=".ResultActivity"></activity>
     </application>
 
 </manifest>

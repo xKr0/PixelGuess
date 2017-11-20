@@ -10,7 +10,22 @@
         android:id="@+id/layout_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
+        <EditText
+            android:id="@+id/answerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="bottom|center"
+            android:inputType="textPersonName"
+            android:text="@string/Answer" />
+
+        <Button
+            android:id="@+id/validateAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Validate" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

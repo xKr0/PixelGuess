@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Bitmap b = drawView.getCanvasBitmap();
                         b.compress(Bitmap.CompressFormat.PNG, 50, bs);
                         intent.putExtra("byteArray", bs.toByteArray());
+                        intent.putExtra("answer", "Cat");
                         startActivity(intent);
                     }
                 });
@@ -278,5 +279,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint));
             currPaint=(ImageButton)view;
         }
+    }
+
+    // Consume the event to not go back to the drawing activity
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }

@@ -10,4 +10,10 @@
     <string name="lrg">Large</string>
 
     <string name="Timer">00 secondes</string>
+
+    <string name="Answer">Your Answer</string>
+    <string name="Validate">Validate</string>
+
+    <string name="PlayerResult">Player Result</string>
+    <string name="PlayAgain">Play Again!</string>
 </resources>

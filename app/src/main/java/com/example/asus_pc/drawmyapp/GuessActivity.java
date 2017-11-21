@@ -3,9 +3,7 @@ package com.example.asus_pc.drawmyapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +30,7 @@ public class GuessActivity extends DeleteOnDestroyActivity {
         // get the editText answer
         answerText = findViewById(R.id.answerText);
 
-        Score.getInstance().guessActivity = this;
+        PartyManager.getInstance().guessActivity = this;
 
         // add the imageDraw to the layout
         imageView = new ImageView(this);

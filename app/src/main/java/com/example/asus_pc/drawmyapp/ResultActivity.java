@@ -17,21 +17,21 @@ public class ResultActivity extends DeleteOnDestroyActivity {
 
         // display if the player won or not
         TextView result = findViewById(R.id.resultText);
-        if (right) {
+        /*if (right) {
             result.setText("You got it right !!!");
 
             // inc the player score
-            Score.getInstance().incScore();
+            PartyManager.getInstance().incScore();
         } else {
             result.setText("Wrong answer, you will do better nex Time!");
-        }
+        }*/
 
         // display the two player scores
         TextView scoreTextPlayer1 = findViewById(R.id.scorePlayer1);
-        scoreTextPlayer1.setText("Player 1 : " + Score.getInstance().getScorePlayer1());
+        scoreTextPlayer1.setText("Player 1 : " + PartyManager.getInstance().getScorePlayer1());
 
         TextView scoreTextPlayer2 = findViewById(R.id.scorePlayer2);
-        scoreTextPlayer2.setText("Player 2 :" + Score.getInstance().getScorePlayer2());
+        scoreTextPlayer2.setText("Player 2 :" + PartyManager.getInstance().getScorePlayer2());
 
         // on the play again button launch a new round
         Button playAgain = findViewById(R.id.playAgainButton);
@@ -39,7 +39,7 @@ public class ResultActivity extends DeleteOnDestroyActivity {
             @Override
             public void onClick(View view) {
                 // pass to the new player
-                Score.getInstance().nextPlayer();
+                PartyManager.getInstance().nextPlayer();
 
                 // go to the MainActivity
                 Intent intent = new Intent(ResultActivity.this, MainActivity.class);

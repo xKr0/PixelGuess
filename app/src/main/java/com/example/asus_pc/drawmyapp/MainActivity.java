@@ -1,7 +1,6 @@
 package com.example.asus_pc.drawmyapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
@@ -10,13 +9,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import java.io.ByteArrayOutputStream;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import com.example.asus_pc.drawmyapp.model.User;
 
 public class MainActivity extends DeleteOnDestroyActivity implements View.OnClickListener
 {
@@ -103,8 +102,19 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
                 newDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
+                        for (User u : PartyManager.getInstance().usrList) {
+                            if (!u.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo())) {
+                                u.setState("result");
+                                ref.child("users").child(u.getPseudo()).setValue(u);
+                            }
+                        }
+
+                        PartyManager.getInstance().currUser.setState("result");
+                        ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
+                        changeActivity();
+
                         // go to the next page
-                        Intent intent =  new Intent(MainActivity.this,
+                        /*Intent intent =  new Intent(MainActivity.this,
                                 GuessActivity.class);
 
                         ByteArrayOutputStream bs = new ByteArrayOutputStream();
@@ -112,13 +122,32 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
                         b.compress(Bitmap.CompressFormat.PNG, 50, bs);
                         intent.putExtra("byteArray", bs.toByteArray());
                         intent.putExtra("answer", wordToGuess);
-                        startActivity(intent);
+                        startActivity(intent);*/
                     }
                 });
                 newDialog.show();
             }
 
         }.start();
+    }
+
+    private void changeActivity() {
+        // send you to the activity based on your state
+        switch (PartyManager.getInstance().currUser.getState()){
+            case "drawing" :
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
+                break;
+            case "watching" :
+                startActivity(new Intent(MainActivity.this, GuessActivity.class));
+                break;
+            case "results" :
+                startActivity(new Intent(MainActivity.this, ResultActivity.class));
+                break;
+            case "ready" :
+                break;
+            default :
+                break;
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)

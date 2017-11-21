@@ -2,20 +2,23 @@ package com.example.asus_pc.drawmyapp;
 
 import com.example.asus_pc.drawmyapp.model.User;
 
-public class Score {
-    private Score()
+import java.util.ArrayList;
+
+public class PartyManager {
+    private PartyManager()
     {}
 
-    private static Score INSTANCE = new Score();
+    private static PartyManager INSTANCE = new PartyManager();
 
-    public static Score getInstance()
+    public static PartyManager getInstance()
     {	return INSTANCE;
     }
 
     private int scorePlayer1 = 0;
     private int scorePlayer2 = 0;
-
     private int currPlayer = 1;
+
+    final ArrayList<User> usrList = new ArrayList<>();
 
     public User currUser;
 

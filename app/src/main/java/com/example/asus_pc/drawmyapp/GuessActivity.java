@@ -30,7 +30,7 @@ public class GuessActivity extends DeleteOnDestroyActivity {
         // get the editText answer
         answerText = findViewById(R.id.answerText);
 
-        Score.getInstance().guessActivity = this;
+        PartyManager.getInstance().guessActivity = this;
 
         // add the imageDraw to the layout
         imageView = new ImageView(this);

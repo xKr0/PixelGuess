@@ -3,21 +3,13 @@ package com.example.asus_pc.drawmyapp;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.example.asus_pc.drawmyapp.DeleteOnDestroyActivity;
 import com.example.asus_pc.drawmyapp.model.Session;
 import com.example.asus_pc.drawmyapp.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Map;
-
-import static android.support.v4.content.ContextCompat.startActivity;
 
 public class LobbyActivity extends DeleteOnDestroyActivity {
 
@@ -31,39 +23,40 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
     }
 
     protected void startParty(){
-        final ArrayList<User> usrList = new ArrayList<>();
 
         ref.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                PartyManager.getInstance().usrList.clear();
+
                 Iterable<DataSnapshot> eventIterable = dataSnapshot.getChildren();
                 User newValue = null;
                 for(DataSnapshot eventSnap : eventIterable) {
                     User usr = eventSnap.getValue(User.class);
-                    if (usr.getPseudo().equals(Score.getInstance().currUser.getPseudo()))
+                    if (usr.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo()))
                         newValue = usr;
 
-                    usrList.add(usr);
+                    PartyManager.getInstance().usrList.add(usr);
                 }
                 // CASE : YOUR NEXT
                 // user has to :
                 //      - update the session
                 //      - update itself to drawing
                 //      - updates all users to watching
-                if (usrList.size() >= 2 && next.equals(Score.getInstance().currUser.getPseudo())
-                        && Score.getInstance().currUser.getState().equals("ready")){
-                    for (User u : usrList) {
-                        if (!u.getPseudo().equals(Score.getInstance().currUser.getPseudo())) {
+                if (PartyManager.getInstance().usrList.size() >= 2 && next.equals(PartyManager.getInstance().currUser.getPseudo())
+                        && PartyManager.getInstance().currUser.getState().equals("ready")){
+                    for (User u : PartyManager.getInstance().usrList) {
+                        if (!u.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo())) {
                             u.setState("watching");
                             ref.child("users").child(u.getPseudo()).setValue(u);
                         }
                     }
-                    Score.getInstance().currUser.setState("drawing");
-                    ref.child("users").child(Score.getInstance().currUser.getPseudo()).setValue(Score.getInstance().currUser);
+                    PartyManager.getInstance().currUser.setState("drawing");
+                    ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
                     changeActivity();
                 } else {
-                    if (!newValue.getState().equals(Score.getInstance().currUser.getState())){
-                        Score.getInstance().currUser.setState(newValue.getState());
+                    if (!newValue.getState().equals(PartyManager.getInstance().currUser.getState())){
+                        PartyManager.getInstance().currUser.setState(newValue.getState());
                         changeActivity();
                     }
                 }
@@ -78,7 +71,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
 
     private void changeActivity() {
         // send you to the activity based on your state
-        switch (Score.getInstance().currUser.getState()){
+        switch (PartyManager.getInstance().currUser.getState()){
             case "drawing" :
                 startActivity(new Intent(LobbyActivity.this, MainActivity.class));
                 break;
@@ -102,7 +95,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Session session = dataSnapshot.getValue(Session.class);
                 next = session.getNext();
-                Score.getInstance().UpdateImageView(session.getBitmap());
+                PartyManager.getInstance().UpdateImageView(session.getBitmap());
             }
 
             @Override

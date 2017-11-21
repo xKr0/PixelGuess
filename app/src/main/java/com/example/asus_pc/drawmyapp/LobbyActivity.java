@@ -39,9 +39,6 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                 Iterable<DataSnapshot> eventIterable = dataSnapshot.getChildren();
                 User newValue = null;
                 for(DataSnapshot eventSnap : eventIterable) {
-
-                    Map eventMap = (Map) eventSnap.getValue();
-
                     User usr = eventSnap.getValue(User.class);
                     if (usr.getPseudo().equals(Score.getInstance().currUser.getPseudo()))
                         newValue = usr;
@@ -65,7 +62,6 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                     ref.child("users").child(Score.getInstance().currUser.getPseudo()).setValue(Score.getInstance().currUser);
                     changeActivity();
                 } else {
-                    //Log.d("user:::", Score.getInstance().currUser.getPseudo());
                     if (!newValue.getState().equals(Score.getInstance().currUser.getState())){
                         Score.getInstance().currUser.setState(newValue.getState());
                         changeActivity();
@@ -107,7 +103,6 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                 Session session = dataSnapshot.getValue(Session.class);
                 next = session.getNext();
                 Score.getInstance().UpdateImageView(session.getBitmap());
-                Log.d("sess", session.getBitmap() + " " + session.getState() + " " + session.getNext());
             }
 
             @Override

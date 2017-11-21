@@ -1,19 +1,18 @@
 package com.example.asus_pc.drawmyapp;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.util.Base64;
-import android.view.View;
 import android.content.Context;
-import android.util.AttributeSet;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.view.MotionEvent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.AttributeSet;
+import android.util.Base64;
 import android.util.TypedValue;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -108,9 +107,6 @@ public class DrawingView extends View
 
         // onDraw() will execute
         invalidate();
-        
-        // update the image online
-        updateOnline();
 
         return true;
     }

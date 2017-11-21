@@ -46,7 +46,6 @@ public class LoadScreenActivity extends DeleteOnDestroyActivity
             public void onClick(DialogInterface dialog, int which){
 
                 if (!pseudo.getText().toString().equals("")) {
-                    //Log.d("pseudo::", pseudo.getText().toString());
                     // add user to firebase
                     addUserToDatabase(pseudo.getText().toString());
 

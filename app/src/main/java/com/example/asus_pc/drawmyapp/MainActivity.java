@@ -80,6 +80,9 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             public void onTick(long millisUntilFinished) {
                 timerText.setText(millisUntilFinished / 1000 + " secondes restantes");
                 //here you can have your logic to set text to edittext
+
+                // update the image online
+                drawView.updateOnline();
             }
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)

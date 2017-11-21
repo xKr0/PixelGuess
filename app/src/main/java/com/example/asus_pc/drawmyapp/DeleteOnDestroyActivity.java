@@ -30,5 +30,4 @@ public class DeleteOnDestroyActivity extends AppCompatActivity
         // we also had the user into the database Firebase
         ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
     }
-
 }

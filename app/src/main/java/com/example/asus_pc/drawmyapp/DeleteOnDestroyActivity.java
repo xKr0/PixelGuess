@@ -10,6 +10,7 @@ public class DeleteOnDestroyActivity extends AppCompatActivity
 {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
     public String next = "";
+    public String state = "";
 
     @Override
     public void onDestroy() {

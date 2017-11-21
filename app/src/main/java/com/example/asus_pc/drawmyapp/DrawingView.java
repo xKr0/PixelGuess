@@ -108,13 +108,17 @@ public class DrawingView extends View
 
         // onDraw() will execute
         invalidate();
+        
+        // update the image online
+        updateOnline();
+
         return true;
     }
 
     public void updateOnline() {
         Bitmap bmp = canvasBitmap.copy(canvasBitmap.getConfig(), canvasBitmap.isMutable()); //your image
         ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+        bmp.compress(Bitmap.CompressFormat.PNG, 50, bYtE);
         bmp.recycle();
         byte[] byteArray = bYtE.toByteArray();
         String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);

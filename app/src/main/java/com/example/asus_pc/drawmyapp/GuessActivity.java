@@ -84,7 +84,6 @@ public class GuessActivity extends DeleteOnDestroyActivity {
     }
 
     public void setImageView(String bmpString) {
-        imageView = new ImageView(this);
         imageView.setImageBitmap(stringToBitMap(bmpString));
 
         // refresh the view

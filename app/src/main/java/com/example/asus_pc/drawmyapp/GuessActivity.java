@@ -6,14 +6,12 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import java.io.ByteArrayInputStream;
-import java.util.Base64;
 
 public class GuessActivity extends DeleteOnDestroyActivity {
 
@@ -34,11 +32,13 @@ public class GuessActivity extends DeleteOnDestroyActivity {
         // get the editText answer
         answerText = findViewById(R.id.answerText);
 
-        // add the imageDraw to the layout
+        Score.getInstance().guessActivity = this;
 
+        // add the imageDraw to the layout
+        imageView = new ImageView(this);
         if(getIntent().hasExtra("byteArray")) {
             LinearLayout layout = findViewById(R.id.layout_linear);
-            imageView = new ImageView(this);
+
             Bitmap b = BitmapFactory.decodeByteArray(
                     getIntent().getByteArrayExtra("byteArray"),0,getIntent()
                             .getByteArrayExtra("byteArray").length);
@@ -85,16 +85,21 @@ public class GuessActivity extends DeleteOnDestroyActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setImageView(String bmpString) {
-
         imageView = new ImageView(this);
-
-        byte[] byteArray = Base64.getDecoder().decode(bmpString);
-
-        Bitmap b = BitmapFactory.decodeByteArray(
-                byteArray,0, byteArray.length);
-        imageView.setImageBitmap(b);
+        imageView.setImageBitmap(stringToBitMap(bmpString));
 
         // refresh the view
         imageView.invalidate();
+    }
+
+    public Bitmap stringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

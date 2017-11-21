@@ -1,5 +1,6 @@
 package com.example.asus_pc.drawmyapp;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Base64;
 import android.view.View;
@@ -111,14 +112,16 @@ public class DrawingView extends View
     }
 
     public void updateOnline() {
-        ByteArrayOutputStream bs = new ByteArrayOutputStream();
-        canvasBitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-        byte[] byteArray = bs.toByteArray();
-        String imageB64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        Bitmap bmp =  canvasBitmap; //your image
+        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+        bmp.recycle();
+        byte[] byteArray = bYtE.toByteArray();
+        String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
         // update on firebase
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("session").child("next").setValue(imageB64);
+        ref.child("session").child("next").setValue(imageFile);
     }
 
     public void setColor(String newColor){

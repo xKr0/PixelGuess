@@ -1,5 +1,10 @@
 package com.example.asus_pc.drawmyapp;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.ImageView;
+
 import com.example.asus_pc.drawmyapp.model.User;
 
 public class Score {
@@ -19,6 +24,8 @@ public class Score {
 
     public User currUser;
 
+    public GuessActivity guessActivity;
+
     public int getScorePlayer1() {
         return scorePlayer1;
     }
@@ -29,6 +36,10 @@ public class Score {
 
     public int getCurrPlayer() {
         return currPlayer;
+    }
+
+    public void UpdateImageView(String bmpString) {
+        guessActivity.setImageView(bmpString);
     }
 
     public void nextPlayer() {

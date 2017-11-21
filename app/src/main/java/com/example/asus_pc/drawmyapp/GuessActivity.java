@@ -3,12 +3,17 @@ package com.example.asus_pc.drawmyapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import java.io.ByteArrayInputStream;
+import java.util.Base64;
 
 public class GuessActivity extends DeleteOnDestroyActivity {
 
@@ -17,6 +22,8 @@ public class GuessActivity extends DeleteOnDestroyActivity {
 
     // button to validate the answer
     private Button validateAnswer;
+
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +35,20 @@ public class GuessActivity extends DeleteOnDestroyActivity {
         answerText = findViewById(R.id.answerText);
 
         // add the imageDraw to the layout
-        LinearLayout layout = findViewById(R.id.layout_linear);
+
         if(getIntent().hasExtra("byteArray")) {
-            ImageView previewThumbnail = new ImageView(this);
+            LinearLayout layout = findViewById(R.id.layout_linear);
+            imageView = new ImageView(this);
             Bitmap b = BitmapFactory.decodeByteArray(
                     getIntent().getByteArrayExtra("byteArray"),0,getIntent()
                             .getByteArrayExtra("byteArray").length);
-            previewThumbnail.setImageBitmap(b);
+            imageView.setImageBitmap(b);
 
-            layout.addView(previewThumbnail);
+            layout.addView(imageView);
         }
+
+        LinearLayout layout = findViewById(R.id.layout_linear);
+        layout.addView(imageView);
 
         validateAnswer = findViewById(R.id.validateAnswer);
 
@@ -70,5 +81,20 @@ public class GuessActivity extends DeleteOnDestroyActivity {
     @Override
     public void onBackPressed() {
         return;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setImageView(String bmpString) {
+
+        imageView = new ImageView(this);
+
+        byte[] byteArray = Base64.getDecoder().decode(bmpString);
+
+        Bitmap b = BitmapFactory.decodeByteArray(
+                byteArray,0, byteArray.length);
+        imageView.setImageBitmap(b);
+
+        // refresh the view
+        imageView.invalidate();
     }
 }

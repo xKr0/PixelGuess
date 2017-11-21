@@ -64,7 +64,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                     changeActivity();
                 } else {
                     //Log.d("user:::", Score.getInstance().currUser.getPseudo());
-                    if (newValue.getState().equals(Score.getInstance().currUser.getState())){
+                    if (!newValue.getState().equals(Score.getInstance().currUser.getState())){
                         Score.getInstance().currUser.setState(newValue.getState());
                         changeActivity();
                     }
@@ -102,8 +102,8 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Session session = dataSnapshot.getValue(Session.class);
-                next = session.getNextToDraw();
-                Log.d("sess", session.getBitmap() + " " + session.getState() + " " + session.getNextToDraw());
+                next = session.getNext();
+                Log.d("sess", session.getBitmap() + " " + session.getState() + " " + session.getNext());
             }
 
             @Override

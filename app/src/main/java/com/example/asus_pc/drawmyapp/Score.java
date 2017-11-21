@@ -1,12 +1,5 @@
 package com.example.asus_pc.drawmyapp;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.widget.ImageView;
-
 import com.example.asus_pc.drawmyapp.model.User;
 
 public class Score {

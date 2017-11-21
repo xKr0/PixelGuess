@@ -111,6 +111,10 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
 
                         PartyManager.getInstance().currUser.setState("result");
                         ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
+
+                        // we change the state of the game play
+                        ref.child("session").child("state").setValue("result");
+
                         changeActivity();
 
                         // go to the next page

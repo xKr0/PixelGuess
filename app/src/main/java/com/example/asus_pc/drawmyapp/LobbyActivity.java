@@ -44,7 +44,8 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                 //      - update itself to drawing
                 //      - updates all users to watching
                 if (PartyManager.getInstance().usrList.size() >= 2 && next.equals(PartyManager.getInstance().currUser.getPseudo())
-                        && PartyManager.getInstance().currUser.getState().equals("ready")){
+                        && PartyManager.getInstance().currUser.getState().equals("ready") && !state.equals("")
+                        && (!state.equals("in_progress") || !state.equals("result"))){
                     for (User u : PartyManager.getInstance().usrList) {
                         if (!u.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo())) {
                             u.setState("watching");
@@ -53,6 +54,10 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                     }
                     PartyManager.getInstance().currUser.setState("drawing");
                     ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
+
+                    // we change the state of the game play
+                    ref.child("session").child("state").setValue("in_progress");
+
                     changeActivity();
                 } else {
                     if (!newValue.getState().equals(PartyManager.getInstance().currUser.getState())){
@@ -95,6 +100,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Session session = dataSnapshot.getValue(Session.class);
                 next = session.getNext();
+                state = session.getState();
                 PartyManager.getInstance().UpdateImageView(session.getBitmap());
             }
 

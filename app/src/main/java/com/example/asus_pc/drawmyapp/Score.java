@@ -3,6 +3,8 @@ package com.example.asus_pc.drawmyapp;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.widget.ImageView;
 
 import com.example.asus_pc.drawmyapp.model.User;
@@ -38,8 +40,10 @@ public class Score {
         return currPlayer;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void UpdateImageView(String bmpString) {
-        guessActivity.setImageView(bmpString);
+        if (guessActivity != null)
+            guessActivity.setImageView(bmpString);
     }
 
     public void nextPlayer() {

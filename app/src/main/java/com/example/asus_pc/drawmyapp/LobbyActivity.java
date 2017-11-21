@@ -1,6 +1,8 @@
 package com.example.asus_pc.drawmyapp;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,10 +101,12 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
 
     protected void getNextUserToDraw(){
         ref.child("session").addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Session session = dataSnapshot.getValue(Session.class);
                 next = session.getNext();
+                Score.getInstance().UpdateImageView(session.getBitmap());
                 Log.d("sess", session.getBitmap() + " " + session.getState() + " " + session.getNext());
             }
 

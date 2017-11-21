@@ -40,7 +40,6 @@ public class Score {
         return currPlayer;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void UpdateImageView(String bmpString) {
         if (guessActivity != null)
             guessActivity.setImageView(bmpString);

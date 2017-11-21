@@ -112,7 +112,7 @@ public class DrawingView extends View
     }
 
     public void updateOnline() {
-        Bitmap bmp =  canvasBitmap; //your image
+        Bitmap bmp = canvasBitmap.copy(canvasBitmap.getConfig(), canvasBitmap.isMutable()); //your image
         ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
         bmp.recycle();
@@ -121,7 +121,7 @@ public class DrawingView extends View
 
         // update on firebase
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("session").child("next").setValue(imageFile);
+        ref.child("session").child("bitmap").setValue(imageFile);
     }
 
     public void setColor(String newColor){

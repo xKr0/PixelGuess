@@ -83,7 +83,6 @@ public class GuessActivity extends DeleteOnDestroyActivity {
         return;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setImageView(String bmpString) {
         imageView = new ImageView(this);
         imageView.setImageBitmap(stringToBitMap(bmpString));

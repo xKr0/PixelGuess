@@ -29,7 +29,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
     private float smallBrush, mediumBrush, largeBrush;
 
     // end time
-    int timeMax = 10000;
+    int timeMax = 20000;
 
     // display of the timer
     private TextView timerText;
@@ -80,9 +80,6 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             public void onTick(long millisUntilFinished) {
                 timerText.setText(millisUntilFinished / 1000 + " secondes restantes");
                 //here you can have your logic to set text to edittext
-
-                // update the image online
-                drawView.updateOnline();
             }
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)

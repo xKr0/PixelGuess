@@ -22,7 +22,7 @@ public class LoadScreenActivity extends DeleteOnDestroyActivity
         // get the array of words
         GuessWordsList.setWordsList(getResources().getStringArray(R.array.wordsArray));
 
-        play = (Button)findViewById(R.id.play_btn);
+        play = findViewById(R.id.play_btn);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

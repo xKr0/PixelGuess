@@ -1,6 +1,7 @@
 package com.example.asus_pc.drawmyapp;
 
 import android.graphics.Color;
+import android.util.Base64;
 import android.view.View;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -12,6 +13,11 @@ import android.view.MotionEvent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.TypedValue;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.ByteArrayOutputStream;
 
 public class DrawingView extends View
 {
@@ -102,6 +108,17 @@ public class DrawingView extends View
         // onDraw() will execute
         invalidate();
         return true;
+    }
+
+    public void updateOnline() {
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+        canvasBitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+        byte[] byteArray = bs.toByteArray();
+        String imageB64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        // update on firebase
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("session").child("next").setValue(imageB64);
     }
 
     public void setColor(String newColor){

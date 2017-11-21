@@ -23,11 +23,11 @@ public class DeleteOnDestroyActivity extends AppCompatActivity
     protected void addUserToDatabase(String pseudo){
         Score.getInstance().currUser = new User(pseudo, "ready");
 
-        // we also had the user into the database Firebase
-        ref.child("users").child(Score.getInstance().currUser.getPseudo()).setValue(Score.getInstance().currUser);
-
         // we change the user to play
         ref.child("session").child("next").setValue(pseudo);
+
+        // we also had the user into the database Firebase
+        ref.child("users").child(Score.getInstance().currUser.getPseudo()).setValue(Score.getInstance().currUser);
     }
 
 }

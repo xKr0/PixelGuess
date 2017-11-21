@@ -46,6 +46,10 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                 if (PartyManager.getInstance().usrList.size() >= 2 && next.equals(PartyManager.getInstance().currUser.getPseudo())
                         && PartyManager.getInstance().currUser.getState().equals("ready") && !state.equals("")
                         && (!state.equals("in_progress") || !state.equals("result"))){
+
+                    // we change the state of the game play
+                    ref.child("session").child("state").setValue("in_progress");
+
                     for (User u : PartyManager.getInstance().usrList) {
                         if (!u.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo())) {
                             u.setState("watching");
@@ -54,10 +58,6 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
                     }
                     PartyManager.getInstance().currUser.setState("drawing");
                     ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
-
-                    // we change the state of the game play
-                    ref.child("session").child("state").setValue("in_progress");
-
                     changeActivity();
                 } else {
                     if (!newValue.getState().equals(PartyManager.getInstance().currUser.getState())){
@@ -83,7 +83,7 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
             case "watching" :
                 startActivity(new Intent(LobbyActivity.this, GuessActivity.class));
                 break;
-            case "results" :
+            case "result" :
                 startActivity(new Intent(LobbyActivity.this, ResultActivity.class));
                 break;
             case "ready" :

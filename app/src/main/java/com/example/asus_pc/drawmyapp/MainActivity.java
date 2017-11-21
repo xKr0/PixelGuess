@@ -102,6 +102,9 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
                 newDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
+                        // we change the state of the game play
+                        ref.child("session").child("state").setValue("result");
+
                         for (User u : PartyManager.getInstance().usrList) {
                             if (!u.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo())) {
                                 u.setState("result");
@@ -111,9 +114,6 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
 
                         PartyManager.getInstance().currUser.setState("result");
                         ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
-
-                        // we change the state of the game play
-                        ref.child("session").child("state").setValue("result");
 
                         changeActivity();
 
@@ -144,7 +144,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             case "watching" :
                 startActivity(new Intent(MainActivity.this, GuessActivity.class));
                 break;
-            case "results" :
+            case "result" :
                 startActivity(new Intent(MainActivity.this, ResultActivity.class));
                 break;
             case "ready" :

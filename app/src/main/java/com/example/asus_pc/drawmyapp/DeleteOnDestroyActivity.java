@@ -39,6 +39,10 @@ public class DeleteOnDestroyActivity extends AppCompatActivity
         ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
     }
 
+    protected void resetBitmapInDatabase(){
+        ref.child("session").child("bitmap").setValue(" ");
+    }
+
     protected void setAnswerInDatabase(){
         ref.child("session").child("answer").setValue(PartyManager.getInstance().answer);
     }

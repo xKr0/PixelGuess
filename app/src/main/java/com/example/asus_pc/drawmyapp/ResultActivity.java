@@ -74,6 +74,9 @@ public class ResultActivity extends DeleteOnDestroyActivity {
 
             PartyManager.getInstance().state = "ready";
             ref.child("session").child("state").setValue("ready");
+
+            // reset empty image
+            resetBitmapInDatabase();
         }
     }
 

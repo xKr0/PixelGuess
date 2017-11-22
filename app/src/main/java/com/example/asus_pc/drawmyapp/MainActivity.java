@@ -40,6 +40,9 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Ready? Draw!");
+
+        setIntentArray();
 
         drawView = findViewById(R.id.drawing);
 
@@ -104,6 +107,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
                     public void onDismiss(DialogInterface dialogInterface) {
                         // we change the state of the game play
                         ref.child("session").child("state").setValue("result");
+                        PartyManager.getInstance().state = "result";
 
                         for (User u : PartyManager.getInstance().usrList) {
                             if (!u.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo())) {
@@ -135,28 +139,19 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
         }.start();
     }
 
-    private void changeActivity() {
-        // send you to the activity based on your state
-        switch (PartyManager.getInstance().currUser.getState()){
-            case "drawing" :
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
-                break;
-            case "watching" :
-                startActivity(new Intent(MainActivity.this, GuessActivity.class));
-                break;
-            case "result" :
-                startActivity(new Intent(MainActivity.this, ResultActivity.class));
-                break;
-            case "ready" :
-                break;
-            default :
-                break;
-        }
+    protected void setIntentArray(){
+        intentArray = new Intent[3];
+        intentArray[0] = new Intent(MainActivity.this, MainActivity.class);
+        intentArray[1] = new Intent(MainActivity.this, GuessActivity.class);
+        intentArray[2] = new Intent(MainActivity.this, ResultActivity.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void showInitDialog(){
         wordToGuess = GuessWordsList.pichAWord();
+        PartyManager.getInstance().answer = wordToGuess;
+        setAnswerInDatabase();
+
         AlertDialog.Builder wordDialog = new AlertDialog.Builder(MainActivity.this);
         wordDialog.setTitle("Your Word");
         wordDialog.setMessage("Draw me a(n) " + wordToGuess + " please.");

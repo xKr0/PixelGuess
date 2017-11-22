@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.asus_pc.drawmyapp.model.Session;
 import com.example.asus_pc.drawmyapp.model.User;
@@ -18,96 +19,21 @@ public class LobbyActivity extends DeleteOnDestroyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
 
+        setIntentArray();
         getNextUserToDraw();
+        Log.d("lobby::", PartyManager.getInstance().next);
+
         startParty();
     }
 
-    protected void startParty(){
-
-        ref.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                PartyManager.getInstance().usrList.clear();
-
-                Iterable<DataSnapshot> eventIterable = dataSnapshot.getChildren();
-                User newValue = null;
-                for(DataSnapshot eventSnap : eventIterable) {
-                    User usr = eventSnap.getValue(User.class);
-                    if (usr.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo()))
-                        newValue = usr;
-
-                    PartyManager.getInstance().usrList.add(usr);
-                }
-                // CASE : YOUR NEXT
-                // user has to :
-                //      - update the session
-                //      - update itself to drawing
-                //      - updates all users to watching
-                if (PartyManager.getInstance().usrList.size() >= 2 && next.equals(PartyManager.getInstance().currUser.getPseudo())
-                        && PartyManager.getInstance().currUser.getState().equals("ready") && !state.equals("")
-                        && (!state.equals("in_progress") || !state.equals("result"))){
-
-                    // we change the state of the game play
-                    ref.child("session").child("state").setValue("in_progress");
-
-                    for (User u : PartyManager.getInstance().usrList) {
-                        if (!u.getPseudo().equals(PartyManager.getInstance().currUser.getPseudo())) {
-                            u.setState("watching");
-                            ref.child("users").child(u.getPseudo()).setValue(u);
-                        }
-                    }
-                    PartyManager.getInstance().currUser.setState("drawing");
-                    ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
-                    changeActivity();
-                } else {
-                    if (!newValue.getState().equals(PartyManager.getInstance().currUser.getState())){
-                        PartyManager.getInstance().currUser.setState(newValue.getState());
-                        changeActivity();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
+    protected void setIntentArray(){
+        intentArray = new Intent[3];
+        intentArray[0] = new Intent(LobbyActivity.this, MainActivity.class);
+        intentArray[1] = new Intent(LobbyActivity.this, GuessActivity.class);
+        intentArray[2] = new Intent(LobbyActivity.this, ResultActivity.class);
     }
 
-    private void changeActivity() {
-        // send you to the activity based on your state
-        switch (PartyManager.getInstance().currUser.getState()){
-            case "drawing" :
-                startActivity(new Intent(LobbyActivity.this, MainActivity.class));
-                break;
-            case "watching" :
-                startActivity(new Intent(LobbyActivity.this, GuessActivity.class));
-                break;
-            case "result" :
-                startActivity(new Intent(LobbyActivity.this, ResultActivity.class));
-                break;
-            case "ready" :
-                break;
-            default :
-                break;
-        }
-    }
-
-    protected void getNextUserToDraw(){
-        ref.child("session").addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Session session = dataSnapshot.getValue(Session.class);
-                next = session.getNext();
-                state = session.getState();
-                PartyManager.getInstance().UpdateImageView(session.getBitmap());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-    }
+    // Consume the event to not go back to the drawing activity
+    @Override
+    public void onBackPressed() {return;}
 }

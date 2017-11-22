@@ -1,5 +1,7 @@
 package com.example.asus_pc.drawmyapp;
 
+import android.util.Log;
+
 import com.example.asus_pc.drawmyapp.model.User;
 
 import java.util.ArrayList;
@@ -14,43 +16,35 @@ public class PartyManager {
     {	return INSTANCE;
     }
 
-    private int scorePlayer1 = 0;
-    private int scorePlayer2 = 0;
-    private int currPlayer = 1;
-
     final ArrayList<User> usrList = new ArrayList<>();
+
+    public String answer;
 
     public User currUser;
 
+    public String next = "";
+
+    public String state = "";
+
     public GuessActivity guessActivity;
-
-    public int getScorePlayer1() {
-        return scorePlayer1;
-    }
-
-    public int getScorePlayer2() {
-        return scorePlayer2;
-    }
-
-    public int getCurrPlayer() {
-        return currPlayer;
-    }
 
     public void UpdateImageView(String bmpString) {
         if (guessActivity != null)
             guessActivity.setImageView(bmpString);
     }
 
-    public void nextPlayer() {
-        if(currPlayer == 2) currPlayer = 1;
-        else currPlayer = 2;
+    public void SetNextToDraw() {
+        int index = usrList.indexOf(currUser);
+
+        Log.d("index::", Integer.toString(index));
+        index++;
+
+        if (index >= usrList.size()) {
+            index = 0;
+        }
+
+        Log.d("index_next::", Integer.toString(index));
+        next = usrList.get(index).getPseudo();
     }
 
-    public void incScore() {
-        if (currPlayer == 2) {
-            scorePlayer2++;
-        } else {
-            scorePlayer1++;
-        }
-    }
 }

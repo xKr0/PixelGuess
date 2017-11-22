@@ -1,12 +1,13 @@
 package com.example.asus_pc.drawmyapp.model;
 
 public class Session {
-    private String state, bitmap, next;
+    private String state, bitmap, next, answer;
 
-    public Session(String bitmap, String next, String state){
+    public Session(String bitmap, String next, String state, String answer){
         this.bitmap = bitmap;
         this.next = next;
         this.state = state;
+        this.answer = answer;
     }
 
     // for firebase
@@ -36,5 +37,13 @@ public class Session {
 
     public void setBitmap(String bitmap) {
         this.bitmap = bitmap;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

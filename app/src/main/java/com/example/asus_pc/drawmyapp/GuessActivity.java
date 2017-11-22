@@ -1,15 +1,22 @@
 package com.example.asus_pc.drawmyapp;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.example.asus_pc.drawmyapp.model.Session;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class GuessActivity extends DeleteOnDestroyActivity {
 
@@ -50,35 +57,17 @@ public class GuessActivity extends DeleteOnDestroyActivity {
 
         validateAnswer = findViewById(R.id.validateAnswer);
 
+        getAnswerFromDatabase();
+
         // check on the validate method if the user was right
         validateAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String correctAnswer = getIntent().getStringExtra("answer");
-                String answer = String.valueOf(answerText.getText());
-
-                correctAnswer = correctAnswer.toLowerCase();
-                answer = answer.toLowerCase();
-
-                // we compare the two strings
-                boolean right = false;
-                if (answer.equals(correctAnswer)) {
-                    right = true;
-                }
-
-                // change to the finish activity
-                Intent intent =  new Intent(GuessActivity.this, ResultActivity.class);
-                intent.putExtra("right", right);
-                startActivity(intent);
+                updateUserScore();
+                validateAnswer.setEnabled(false);
             }
         });
 
-    }
-
-    // Consume the event to not go back to the drawing activity
-    @Override
-    public void onBackPressed() {
-        return;
     }
 
     public void setImageView(String bmpString) {
@@ -97,5 +86,48 @@ public class GuessActivity extends DeleteOnDestroyActivity {
             e.getMessage();
             return null;
         }
+    }
+
+    private void getAnswerFromDatabase(){
+        ref.child("session").addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Session session = dataSnapshot.getValue(Session.class);
+                PartyManager.getInstance().answer = session.getAnswer();
+                //Log.d("answer_db::", "HELLOOOOOOOOO");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    private void updateUserScore(){
+        String answerUsr = String.valueOf(answerText.getText());
+        answerUsr = answerUsr.toLowerCase();
+
+        //Log.d("answer_user::", answerUsr);
+        //Log.d("answer_db::", PartyManager.getInstance().answer);
+        //boolean b = answerUsr.equals(PartyManager.getInstance().answer);
+        //Log.d("true?::", Boolean.toString(b));
+
+        // we compare the two strings
+        if (answerUsr.equals(PartyManager.getInstance().answer)) {
+            // add 1 to currUser score
+            PartyManager.getInstance().currUser.incrementScore();
+
+            //Log.d("if_loop::", "right answer");
+            updateUserScoreInDatabase();
+        }
+        //Log.d("score::", Integer.toString(PartyManager.getInstance().currUser.getScore()));
+    }
+
+    // Consume the event to not go back to the drawing activity
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }

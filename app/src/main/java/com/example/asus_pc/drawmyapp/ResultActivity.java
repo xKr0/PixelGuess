@@ -25,14 +25,16 @@ public class ResultActivity extends DeleteOnDestroyActivity {
         // set next player to draw if you're the current player
         nextPlayer();
 
+        setIntentArray();
+        setNewUserState();
+
         // on the play again button launch a new round
         Button playAgain = findViewById(R.id.playAgainButton);
+
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // go to the LobbyActivity
-                Intent intent = new Intent(ResultActivity.this, LobbyActivity.class);
-                startActivity(intent);
+                changeActivity();
             }
         });
     }
@@ -52,6 +54,17 @@ public class ResultActivity extends DeleteOnDestroyActivity {
         resultsList.setAdapter(adapter);
     }
 
+    private void setNewUserState(){
+        if (PartyManager.getInstance().next.equals(PartyManager.getInstance().currUser.getPseudo())){
+            PartyManager.getInstance().currUser.setState("drawing");
+        }
+        else {
+            PartyManager.getInstance().currUser.setState("watching");
+        }
+
+        updateUserStateInDatabase();
+    }
+
     public void nextPlayer() {
         // if we're in state=result && you're the drawing player
         if (PartyManager.getInstance().state.equals("result") && PartyManager.getInstance().currUser.getPseudo().equals(PartyManager.getInstance().next)) {
@@ -62,6 +75,13 @@ public class ResultActivity extends DeleteOnDestroyActivity {
             PartyManager.getInstance().state = "ready";
             ref.child("session").child("state").setValue("ready");
         }
+    }
+
+    protected void setIntentArray(){
+        intentArray = new Intent[3];
+        intentArray[0] = new Intent(ResultActivity.this, MainActivity.class);
+        intentArray[1] = new Intent(ResultActivity.this, GuessActivity.class);
+        intentArray[2] = new Intent(ResultActivity.this, ResultActivity.class);
     }
 
     // Consume the event to not go back to the drawing activity

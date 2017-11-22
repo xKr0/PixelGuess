@@ -47,6 +47,10 @@ public class DeleteOnDestroyActivity extends AppCompatActivity
         ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).child("score").setValue(PartyManager.getInstance().currUser.getScore());
     }
 
+    protected void updateUserStateInDatabase(){
+        ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).child("state").setValue(PartyManager.getInstance().currUser.getState());
+    }
+
     protected void startParty(){
 
         ref.child("users").addValueEventListener(new ValueEventListener() {

@@ -89,13 +89,13 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             public void onFinish() {
-                timerText.setText("done!");
+                timerText.setText("Done!");
 
                 // create a alert
                 // verifying the user mean to restart
                 AlertDialog.Builder newDialog = new AlertDialog.Builder(MainActivity.this);
                 newDialog.setTitle("Time Out");
-                newDialog.setMessage("Ready to show your art?");
+                newDialog.setMessage("Now it's time to see the result?");
                 newDialog.setPositiveButton("Ready", new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which){
                         dialog.dismiss();
@@ -118,19 +118,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
 
                         PartyManager.getInstance().currUser.setState("result");
                         ref.child("users").child(PartyManager.getInstance().currUser.getPseudo()).setValue(PartyManager.getInstance().currUser);
-
                         changeActivity();
-
-                        // go to the next page
-                        /*Intent intent =  new Intent(MainActivity.this,
-                                GuessActivity.class);
-
-                        ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                        Bitmap b = drawView.getCanvasBitmap();
-                        b.compress(Bitmap.CompressFormat.PNG, 50, bs);
-                        intent.putExtra("byteArray", bs.toByteArray());
-                        intent.putExtra("answer", wordToGuess);
-                        startActivity(intent);*/
                     }
                 });
                 newDialog.show();
@@ -184,9 +172,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             smallBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    drawView.setBrushSize(smallBrush);
-                    drawView.setLastBrushSize(smallBrush);
-                    drawView.setErase(false);
+                    setBrushSize(smallBrush, smallBrush);
                     brushDialog.dismiss();
                 }
             });
@@ -195,9 +181,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             mediumBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    drawView.setBrushSize(mediumBrush);
-                    drawView.setLastBrushSize(mediumBrush);
-                    drawView.setErase(false);
+                    setBrushSize(mediumBrush, mediumBrush);
                     brushDialog.dismiss();
                 }
             });
@@ -206,9 +190,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             largeBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    drawView.setBrushSize(largeBrush);
-                    drawView.setLastBrushSize(largeBrush);
-                    drawView.setErase(false);
+                    setBrushSize(largeBrush, largeBrush);
                     brushDialog.dismiss();
                 }
             });
@@ -227,8 +209,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             smallBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(smallBrush);
+                    setEraseSize(smallBrush);
                     brushDialog.dismiss();
                 }
             });
@@ -236,8 +217,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             mediumBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(mediumBrush);
+                    setEraseSize(mediumBrush);
                     brushDialog.dismiss();
                 }
             });
@@ -245,8 +225,7 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             largeBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(largeBrush);
+                    setEraseSize(largeBrush);
                     brushDialog.dismiss();
                 }
             });
@@ -271,6 +250,17 @@ public class MainActivity extends DeleteOnDestroyActivity implements View.OnClic
             });
             newDialog.show();
         }
+    }
+
+    public void setBrushSize(float newSize, float oldSize) {
+        drawView.setBrushSize(newSize);
+        drawView.setLastBrushSize(oldSize);
+        drawView.setErase(false);
+    }
+
+    public void setEraseSize(float newSize) {
+        drawView.setErase(true);
+        drawView.setBrushSize(newSize);
     }
 
     public void paintClicked(View view){

@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,7 +63,9 @@ public class GuessActivity extends DeleteOnDestroyActivity {
             @Override
             public void onClick(View view) {
                 updateUserScore();
+                // disable the user input (because he only got one try)
                 validateAnswer.setEnabled(false);
+                answerText.setEnabled(false);
             }
         });
 
@@ -95,7 +96,6 @@ public class GuessActivity extends DeleteOnDestroyActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Session session = dataSnapshot.getValue(Session.class);
                 PartyManager.getInstance().answer = session.getAnswer();
-                //Log.d("answer_db::", "HELLOOOOOOOOO");
             }
 
             @Override
@@ -109,11 +109,6 @@ public class GuessActivity extends DeleteOnDestroyActivity {
         String answerUsr = String.valueOf(answerText.getText());
         answerUsr = answerUsr.toLowerCase();
 
-        //Log.d("answer_user::", answerUsr);
-        //Log.d("answer_db::", PartyManager.getInstance().answer);
-        //boolean b = answerUsr.equals(PartyManager.getInstance().answer);
-        //Log.d("true?::", Boolean.toString(b));
-
         // we compare the two strings
         if (answerUsr.equals(PartyManager.getInstance().answer)) {
             // add 1 to currUser score
@@ -122,7 +117,6 @@ public class GuessActivity extends DeleteOnDestroyActivity {
             //Log.d("if_loop::", "right answer");
             updateUserScoreInDatabase();
         }
-        //Log.d("score::", Integer.toString(PartyManager.getInstance().currUser.getScore()));
     }
 
     // Consume the event to not go back to the drawing activity
